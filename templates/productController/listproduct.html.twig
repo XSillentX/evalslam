@@ -1,0 +1,38 @@
+{% extends "base.html.twig" %}
+{% block title %}
+	{{ parent() }}
+	Liste des produits
+{% endblock %}
+{% block content %}
+	<div class="container-fluid">
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-10">
+				<h1 class="text-center text-dark">Liste des produits</h1>
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th width="70%" scope="col" class="text-white">nom</th>
+								<th width="70%" scope="col" class="text-white">description</th>
+								<th width="70%" scope="col" class="text-white">stock</th>
+                                <th width="30%" scope="col" class="text-white">Prix</th>
+                                <th width="30%" scope="col" class="text-white">type<th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for p in products %}
+								<tr class="{{ cycle(['table- primary','table-secondary'], loop.index0) }}">
+									<td>{{ p.nom }}</td>
+                                    <td>{{ p.description }}</td>
+                                    <td>{{ p.stock }}</td>
+									<td>{{ p.prix }}€</td>
+                                    <td>{{ p.type.label }}</td>  
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

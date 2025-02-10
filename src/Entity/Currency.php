@@ -1,6 +1,9 @@
 <?php
 declare (strict_types = 1);
 namespace MyApp\Entity;
+namespace MyApp\Entity\Economic;
+
+
 
 class Currency
 {

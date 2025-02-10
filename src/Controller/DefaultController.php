@@ -5,6 +5,9 @@ namespace MyApp\Controller;
 use MyApp\Entity\Produits;
 use MyApp\Entity\Type;
 use MyApp\Model\CurrencyModel;
+use MyApp\Entity\Currency;
+use MyApp\Model\EconomicModel;
+use MyApp\Entity\Economic;
 use MyApp\Model\ProduitsModel;
 use MyApp\Model\TypeModel;
 use MyApp\Model\UserModel;
@@ -15,6 +18,7 @@ class DefaultController
 {
     private $twig;
     private $typeModel;
+    private $EconomicModel;
     private $ProduitsModel;
     private $userModel;
     private $currencyModel;
@@ -26,6 +30,7 @@ class DefaultController
         $this->produitsModel = $dependencyContainer->get('ProduitsModel');
         $this->userModel = $dependencyContainer->get('UserModel');
         $this->currencyModel = $dependencyContainer->get('CurrencyModel');
+        $this->economicModel = $dependencyContainer->get('EconomicModel');
     }
 
     public function types()
@@ -58,13 +63,6 @@ class DefaultController
     {
         echo $this->twig->render('defaultController/mentionsLegales.html.twig', []);
     }
-
-    public function Produits()
-    {
-        $produits = $this->produitsModel->getAllProduits();
-        echo $this->twig->render('defaultController/Produits.html.twig', ['products' => $produits]);
-    }
-
     public function users()
     {
         $users = $this->userModel->getAllUsers();
@@ -107,40 +105,8 @@ class DefaultController
         }
         echo $this->twig->render('defaultController/addType.html.twig', []);
     }
-    public function updateProduits()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = filter_input(INPUT_POST, 'id', FILTER_SANITIZE_NUMBER_INT);
-            $prix = filter_input(INPUT_POST, 'prix', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
-            if (!empty($_POST['prix'])&($_POST['prix'])) {
-                $Produits = new Produits(intVal($id), $nom, floatVal($prix));
-                $success = $this->produitsModel->updateProduits($Produits);
-                if ($success) {
-                    header('Location: index.php?page=produits');
-                }
-            }
-        } else {
-            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
-        }
-        $Produits = $this->produitsModel->getOneProduits(intVal($id));
-        echo $this->twig->render('defaultController/updateProduits.html.twig', ['Produits' => $Produits]);
-    }
-    public function addProduits()
-    {
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $prix = filter_input(INPUT_POST, 'prix', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
-            $nom = filter_input(INPUT_POST, 'nom', FILTER_SANITIZE_STRING);
-            if (!empty($_POST['nom'])&($_POST['prix'])) {
-                $produits = new Produits(null, $nom, floatVal($prix));
-                $success = $this->produitsModel->createType($produits);
-                if ($success) {
-                    header('Location: index.php?page=produits');
-                }
-            }
-        }
-        echo $this->twig->render('defaultController/addProduits.html.twig', []);
-    }
+    
+
     public function deleteType()
     {
         $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);

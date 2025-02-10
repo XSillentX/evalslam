@@ -5,6 +5,8 @@ declare (strict_types = 1);
 namespace MyApp\Routing;
 
 use MyApp\Controller\DefaultController;
+use MyApp\Controller\ProduitsController;
+use MyApp\Controller\EconomicController;
 use MyApp\Controller\UserController;
 use MyApp\Service\DependencyContainer;
 
@@ -31,16 +33,16 @@ class Router
             'mentionsLegales' => [DefaultController::class, 'mentionsLegales'],
             '500' => [DefaultController::class, 'error500'],
             'types' => [DefaultController::class, 'types'],
-            'produits' => [DefaultController::class, 'produits'],
+            'produits' => [ProduitsController::class, 'listproduct'],
             'users' => [DefaultController::class, 'users'],
             'updateType' => [DefaultController::class, 'updateType'],    
-            'updateProduits' => [DefaultController::class, 'updateProduits'], 
+            'updateProduits' => [ProduitsController::class, 'updateProduits'], 
             'addType' => [DefaultController::class, 'addType'], 
-            'addProduits' => [DefaultController::class, 'addProduits'],
-            'currency' => [DefaultController::class, 'currency'],                    
+            'addProduits' => [ProduitsController::class, 'addProduits'],
+            'currency' => [EconomicController::class, 'currency'],                    
             'updatecurrency' => [DefaultController::class, 'updatecurrency'], 
-            'addcurrency' => [DefaultController::class, 'addcurrency'],                    
-
+            'addcurrency' => [DefaultController::class, 'addcurrency'],
+            'economic' => [EconomicController::class, 'listEconomic'],                  
         ];
         $this->defaultPage = 'home';
         $this->errorPage = '404';

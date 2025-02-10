@@ -5,6 +5,7 @@ use MyApp\Model\ProduitsModel;
 use MyApp\Model\TypeModel;
 use MyApp\Model\UserModel;
 use MyApp\Model\CurrencyModel;
+use MyApp\Model\EconomicModel;
 use PDO;
 
 class DependencyContainer
@@ -41,6 +42,9 @@ class DependencyContainer
             case 'CurrencyModel':
                 $pdo = $this->get('PDO');
                 return new CurrencyModel($pdo);
+            case 'EconomicModel':
+                $pdo = $this->get('PDO');
+                return new EconomicModel($pdo);
             default:
                 throw new \Exception("No service found for key: " . $key);
         }
